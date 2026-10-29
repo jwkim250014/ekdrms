@@ -45,25 +45,7 @@ export async function finishRedirectLogin() {
 
 export function watchAuth(callback) {
   if (!auth) { callback(null); return () => {}; }
-  return onAuthStateChanged(auth, async user => {
-    if (user) {
-      const userRef = doc(db, 'users', user.uid);
-      const snap = await getDoc(userRef);
-      const base = {
-        uid: user.uid,
-        displayName: user.displayName || '',
-        email: user.email || '',
-        photoURL: user.photoURL || '',
-        updatedAt: serverTimestamp()
-      };
-      if (!snap.exists()) {
-        await setDoc(userRef, { ...base, coupleId: null, createdAt: serverTimestamp() });
-      } else {
-        await setDoc(userRef, base, { merge: true });
-      }
-    }
-    callback(user);
-  });
+  return onAuthStateChanged(auth, user => callback(user));
 }
 
 export async function logout() {
@@ -102,7 +84,14 @@ export async function createCoupleSpace() {
     active: true,
     createdAt: serverTimestamp()
   });
-  batch.set(userRef, { coupleId: coupleRef.id, updatedAt: serverTimestamp() }, { merge: true });
+  batch.set(userRef, {
+    uid,
+    displayName: auth.currentUser.displayName || '',
+    email: auth.currentUser.email || '',
+    photoURL: auth.currentUser.photoURL || '',
+    coupleId: coupleRef.id,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
   await batch.commit();
   return { coupleId: coupleRef.id, code };
 }
@@ -134,7 +123,14 @@ export async function joinCoupleSpace(codeInput) {
     usedBy: uid,
     usedAt: serverTimestamp()
   });
-  batch.set(userRef, { coupleId, updatedAt: serverTimestamp() }, { merge: true });
+  batch.set(userRef, {
+    uid,
+    displayName: auth.currentUser.displayName || '',
+    email: auth.currentUser.email || '',
+    photoURL: auth.currentUser.photoURL || '',
+    coupleId,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
   await batch.commit();
   return coupleId;
 }
