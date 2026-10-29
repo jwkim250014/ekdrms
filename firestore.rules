@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isSelf(uid) { return signedIn() && request.auth.uid == uid; }
+    function spaceDoc(spaceId) { return get(/databases/$(database)/documents/spaces/$(spaceId)); }
+    function isMember(spaceId) {
+      return signedIn() && request.auth.uid in spaceDoc(spaceId).data.memberIds;
+    }
+
+    match /users/{uid} {
+      allow read, create, update: if isSelf(uid);
+      allow delete: if false;
+    }
+
+    match /spaces/{spaceId} {
+      allow read: if signedIn() && request.auth.uid in resource.data.memberIds;
+
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.memberIds.size() == 1
+        && request.resource.data.memberIds[0] == request.auth.uid;
+
+      // Existing members can change shared settings. A second member can join only
+      // by adding exactly themselves to a one-member space with a valid invite.
+      allow update: if signedIn() && (
+        request.auth.uid in resource.data.memberIds
+        || (
+          resource.data.memberIds.size() == 1
+          && request.resource.data.memberIds.size() == 2
+          && request.resource.data.memberIds.hasAll(resource.data.memberIds)
+          && request.auth.uid in request.resource.data.memberIds
+          && resource.data.inviteCode is string
+          && get(/databases/$(database)/documents/invites/$(resource.data.inviteCode)).data.active == true
+          && get(/databases/$(database)/documents/invites/$(resource.data.inviteCode)).data.spaceId == spaceId
+        )
+      );
+      allow delete: if false;
+
+      match /memories/{memoryId} {
+        allow read: if isMember(spaceId);
+        allow create: if isMember(spaceId)
+          && request.resource.data.authorId == request.auth.uid;
+        allow update, delete: if isMember(spaceId)
+          && resource.data.authorId == request.auth.uid;
+      }
+    }
+
+    match /invites/{code} {
+      allow get: if signedIn() && resource.data.active == true;
+      allow list: if false;
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.active == true;
+      allow update: if signedIn()
+        && resource.data.active == true
+        && request.resource.data.active == false
+        && request.resource.data.usedBy == request.auth.uid;
+      allow delete: if false;
+    }
+  }
+}
