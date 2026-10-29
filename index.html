@@ -10,133 +10,47 @@
 <link rel="manifest" href="manifest.json">
 <title>우리의 하루</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;background:linear-gradient(#fff8fa,#fff);color:#4b3b42}.wrap{max-width:480px;margin:auto;min-height:100dvh;padding:24px 18px 110px}.logo{width:88px;height:88px;border-radius:28px;background:linear-gradient(135deg,#ff9db5,#ffd0dc);display:grid;place-items:center;font-size:42px;margin:80px auto 18px}.center{text-align:center}.btn{width:100%;padding:15px;border:1px solid #eadde2;border-radius:16px;background:#fff;margin-top:10px;font-weight:700;color:#4b3b42}.btn:disabled{opacity:.45}.dark{background:#40343a;color:#fff}.hidden{display:none!important}.top{display:flex;justify-content:space-between;align-items:center;gap:8px}.top-actions{display:flex;gap:7px}.top .btn{width:auto;margin:0;padding:10px 12px}.brand{font-size:24px;font-weight:800}.pink{color:#e76b8d}.hero{margin-top:18px;background:linear-gradient(135deg,#fff,#ffeef3);border-radius:24px;padding:20px}.hero h2{margin:0 0 6px}.dplus{font-size:34px;font-weight:800;color:#e76b8d;margin-top:14px}.since{font-size:13px;color:#927f87;margin-top:4px}.section{margin-top:22px}.section h3{margin-bottom:8px}.section-sub{color:#927f87;font-size:13px;margin:0 0 12px}.memory{background:#fff;border:1px solid #f1dfe5;border-radius:20px;padding:14px;margin-top:10px}.memory h4{margin:10px 0 6px}.memory p{line-height:1.55;color:#6f5d65}.calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.calendar-head button{width:36px;height:36px;border:0;border-radius:50%;background:#fff0f4;color:#d86585;font-size:22px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;color:#9b8990;font-size:12px;margin-bottom:6px}.day{aspect-ratio:1;border:0;border-radius:12px;background:#fff;position:relative;color:#4b3b42}.day.mark:after{content:'♥';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-size:8px;color:#ff8fab}.day.selected{background:#ffedf2;color:#d85f80;font-weight:800}.tabview{display:none}.tabview.active{display:block}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:flex;justify-content:space-around;background:#fffdfddd;border-top:1px solid #f0dfe5;padding:12px 0 calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(14px);z-index:8}.nav button{border:0;background:none;color:#9b8990;min-width:58px;padding:4px}.nav button.active{color:#e76b8d;font-weight:800}.fab{position:fixed;bottom:62px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;border:5px solid white;background:#ff7f9e;color:#fff;font-size:30px;z-index:9}.modal{position:fixed;inset:0;background:#0005;display:none;align-items:flex-end;z-index:20}.sheet{background:#fff;border-radius:28px 28px 0 0;padding:20px;width:100%;max-width:480px;margin:auto;max-height:90dvh;overflow:auto}.sheet input,.sheet textarea{width:100%;margin:6px 0 12px;padding:12px;border:1px solid #eadde2;border-radius:12px;background:#fff}.sheet textarea{min-height:110px;resize:vertical}.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.photo-card{position:relative;border-radius:18px;overflow:hidden;background:#f6e7eb;aspect-ratio:1;border:0;padding:0}.photo-card img{width:100%;height:100%;object-fit:cover;display:block}.photo-meta{position:absolute;left:0;right:0;bottom:0;padding:28px 10px 9px;background:linear-gradient(transparent,#0009);color:white;text-align:left}.photo-meta b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.photo-meta span{font-size:11px;opacity:.9}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff0f4;color:#d86585;font-size:12px;margin:0 6px 6px 0}.anniv{display:grid;gap:10px}.anniv-item{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#fff;border:1px solid #f1dfe5;border-radius:16px;padding:13px 14px}.anniv-item b{font-size:14px}.anniv-item span{font-size:12px;color:#927f87}.settings-btn{margin-top:14px;width:auto;padding:9px 12px;border:1px solid #efdce3;border-radius:999px;background:#fff;color:#d96584;font-weight:700}.date-add{width:100%;padding:13px;border:0;border-radius:14px;background:#ffedf2;color:#d85f80;font-weight:800;margin-top:12px}.record-photo{width:72px;height:72px;border-radius:14px;object-fit:cover;float:right;margin-left:10px}.photo-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:-4px 0 12px}.photo-preview img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px}.detail-photo{width:100%;border-radius:18px;max-height:52vh;object-fit:cover}.empty{background:#fff;border:1px dashed #e8cdd5;border-radius:20px;padding:28px 16px;text-align:center;color:#927f87}.small{font-size:12px;color:#927f87}.status{font-size:12px;color:#927f87;margin-top:10px}.userline{font-size:12px;color:#927f87;margin-top:8px}.codebox{margin:14px 0;padding:14px;background:#fff0f4;border-radius:14px;font-weight:800;letter-spacing:2px;color:#d86585}.couple-people{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:16px 0 2px;padding:12px;background:#fff;border:1px solid #f1dfe5;border-radius:20px}.person-card{text-align:center;min-width:0}.person-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#ffe7ee;display:grid;place-items:center;margin:0 auto 6px;font-weight:800;color:#d86585;overflow:hidden}.person-avatar img{width:100%;height:100%;object-fit:cover}.person-name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.person-sub{font-size:11px;color:#9b8990;margin-top:3px}.me-badge{display:inline-block;margin-left:4px;padding:2px 6px;border-radius:999px;background:#ffedf2;color:#d85f80;font-size:10px;vertical-align:1px}.couple-heart{color:#e76b8d;font-size:22px}.author-tag{font-size:11px;color:#927f87;margin-top:6px}.profile-note{font-size:13px;color:#927f87;line-height:1.5}.name-input{width:100%;padding:14px;border:1px solid #eadde2;border-radius:14px;font-size:16px;text-align:center;margin-top:14px}.activity-list{display:grid;gap:9px}.activity-item{background:#fff;border:1px solid #f1dfe5;border-radius:15px;padding:12px 14px;font-size:13px;color:#6f5d65}.activity-item b{color:#4b3b42}.person-sub{white-space:nowrap}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;background:linear-gradient(#fff8fa,#fff);color:#4b3b42}.wrap{max-width:480px;margin:auto;min-height:100dvh;padding:24px 18px 118px}.logo{width:88px;height:88px;border-radius:28px;background:linear-gradient(135deg,#ff9db5,#ffd0dc);display:grid;place-items:center;font-size:42px;margin:80px auto 18px}.center{text-align:center}.btn{width:100%;padding:15px;border:1px solid #eadde2;border-radius:16px;background:#fff;margin-top:10px;font-weight:700;color:#4b3b42}.btn:disabled{opacity:.45}.dark{background:#40343a;color:#fff}.hidden{display:none!important}.top{display:flex;justify-content:space-between;align-items:center;gap:8px}.top-actions{display:flex;gap:7px}.top .btn{width:auto;margin:0;padding:10px 12px}.brand{font-size:24px;font-weight:800}.pink{color:#e76b8d}.hero{margin-top:18px;background:linear-gradient(135deg,#fff,#ffeef3);border-radius:24px;padding:20px}.hero h2{margin:0 0 6px}.dplus{font-size:34px;font-weight:800;color:#e76b8d;margin-top:14px}.since{font-size:13px;color:#927f87;margin-top:4px}.section{margin-top:22px}.section h3{margin-bottom:8px}.section-sub{color:#927f87;font-size:13px;margin:0 0 12px}.memory{background:#fff;border:1px solid #f1dfe5;border-radius:20px;padding:14px;margin-top:10px}.memory h4{margin:10px 0 6px}.memory p{line-height:1.55;color:#6f5d65}.record-card{cursor:pointer}.record-card:active{transform:scale(.995)}.calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.calendar-head button{width:36px;height:36px;border:0;border-radius:50%;background:#fff0f4;color:#d86585;font-size:22px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;color:#9b8990;font-size:12px;margin-bottom:6px}.day{aspect-ratio:1;border:0;border-radius:12px;background:#fff;position:relative;color:#4b3b42}.day.mark:after{content:'♥';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-size:8px;color:#ff8fab}.day.selected{background:#ffedf2;color:#d85f80;font-weight:800}.tabview{display:none}.tabview.active{display:block}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:flex;justify-content:space-around;background:#fffdfddd;border-top:1px solid #f0dfe5;padding:12px 2px calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(14px);z-index:8}.nav button{border:0;background:none;color:#9b8990;min-width:50px;padding:4px 2px;font-size:12px}.nav button.active{color:#e76b8d;font-weight:800}.fab{position:fixed;bottom:66px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;border:5px solid white;background:#ff7f9e;color:#fff;font-size:30px;z-index:9}.modal{position:fixed;inset:0;background:#0005;display:none;align-items:flex-end;z-index:20}.sheet{background:#fff;border-radius:28px 28px 0 0;padding:20px;width:100%;max-width:480px;margin:auto;max-height:92dvh;overflow:auto}.sheet input,.sheet textarea{width:100%;margin:6px 0 12px;padding:12px;border:1px solid #eadde2;border-radius:12px;background:#fff}.sheet textarea{min-height:96px;resize:vertical}.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.photo-card{position:relative;border-radius:18px;overflow:hidden;background:#f6e7eb;aspect-ratio:1;border:0;padding:0}.photo-card img{width:100%;height:100%;object-fit:cover;display:block}.photo-meta{position:absolute;left:0;right:0;bottom:0;padding:28px 10px 9px;background:linear-gradient(transparent,#0009);color:white;text-align:left}.photo-meta b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.photo-meta span{font-size:11px;opacity:.9}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff0f4;color:#d86585;font-size:12px;margin:0 6px 6px 0}.anniv{display:grid;gap:10px}.anniv-item{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#fff;border:1px solid #f1dfe5;border-radius:16px;padding:13px 14px}.anniv-item b{font-size:14px}.anniv-item span{font-size:12px;color:#927f87}.settings-btn{margin-top:14px;width:auto;padding:9px 12px;border:1px solid #efdce3;border-radius:999px;background:#fff;color:#d96584;font-weight:700}.date-add{width:100%;padding:13px;border:0;border-radius:14px;background:#ffedf2;color:#d85f80;font-weight:800;margin-top:12px}.record-photo{width:72px;height:72px;border-radius:14px;object-fit:cover;float:right;margin-left:10px}.photo-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:-4px 0 12px}.photo-preview img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px}.detail-photo{width:100%;border-radius:18px;max-height:52vh;object-fit:cover}.empty{background:#fff;border:1px dashed #e8cdd5;border-radius:20px;padding:28px 16px;text-align:center;color:#927f87}.small{font-size:12px;color:#927f87}.status{font-size:12px;color:#927f87;margin-top:10px}.userline{font-size:12px;color:#927f87;margin-top:8px}.couple-people{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:16px 0 2px;padding:12px;background:#fff;border:1px solid #f1dfe5;border-radius:20px}.person-card{text-align:center;min-width:0}.person-avatar{width:42px;height:42px;border-radius:50%;background:#ffe7ee;display:grid;place-items:center;margin:0 auto 6px;font-weight:800;color:#d86585;overflow:hidden}.person-name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.person-sub{font-size:11px;color:#9b8990;margin-top:3px;white-space:nowrap}.me-badge{display:inline-block;margin-left:4px;padding:2px 6px;border-radius:999px;background:#ffedf2;color:#d85f80;font-size:10px;vertical-align:1px}.couple-heart{color:#e76b8d;font-size:22px}.author-tag{font-size:11px;color:#927f87;margin-top:6px}.profile-note{font-size:13px;color:#927f87;line-height:1.5}.name-input{width:100%;padding:14px;border:1px solid #eadde2;border-radius:14px;font-size:16px;text-align:center;margin-top:14px}.activity-list{display:grid;gap:9px}.activity-item{background:#fff;border:1px solid #f1dfe5;border-radius:15px;padding:12px 14px;font-size:13px;color:#6f5d65}.activity-item b{color:#4b3b42}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.mini-btn{border:1px solid #efdce3;background:#fff;border-radius:999px;padding:7px 10px;color:#6f5d65;font-size:12px;font-weight:700}.mini-btn.on{background:#ffedf2;color:#d85f80;border-color:#ffd1dc}.comment{padding:10px 0;border-bottom:1px solid #f4e7eb}.comment:last-child{border-bottom:0}.comment b{font-size:13px}.comment p{margin:4px 0 0;font-size:13px;line-height:1.5}.comment-time{font-size:10px;color:#aa98a0}.comment-row{display:flex;gap:8px;align-items:center}.comment-row input{margin:0;flex:1}.comment-row button{width:auto;margin:0;padding:12px 14px}.bucket-item{display:flex;align-items:flex-start;gap:11px;background:#fff;border:1px solid #f1dfe5;border-radius:18px;padding:14px;margin-top:10px}.bucket-check{width:28px;height:28px;border-radius:50%;border:2px solid #ffc0cf;background:#fff;color:#fff;flex:0 0 auto;font-weight:800}.bucket-item.done .bucket-check{background:#ff8fab;border-color:#ff8fab}.bucket-item.done .bucket-title{text-decoration:line-through;color:#a8979e}.bucket-body{flex:1;min-width:0}.bucket-title{font-weight:800}.bucket-meta{font-size:11px;color:#9b8990;margin-top:5px}.fav-filter{display:flex;gap:8px;margin-bottom:12px}.fav-filter button{border:1px solid #efdce3;background:#fff;border-radius:999px;padding:8px 12px;color:#927f87;font-weight:700}.fav-filter button.active{background:#ffedf2;color:#d85f80}.detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.detail-actions button{border:1px solid #efdce3;background:#fff;border-radius:999px;padding:9px 12px;font-size:13px}.detail-actions button.on{background:#ffedf2;color:#d85f80}.star{font-size:18px;float:right;margin-top:-4px}.section-title-row{display:flex;justify-content:space-between;align-items:center;gap:12px}.section-title-row .btn{width:auto;margin:0;padding:9px 12px}.badge-count{font-size:10px;margin-left:3px;color:#b87789}
 </style>
 </head>
 <body>
 <main class="wrap">
 <section id="login">
   <div class="logo">♡</div>
-  <div class="center">
-    <h1>우리의 하루</h1>
-    <p>둘만의 추억을 차곡차곡 기록해요.</p>
-    <button class="btn dark" disabled> Apple로 계속하기 · 준비 중</button>
-    <button class="btn" onclick="loginGoogleAction()">G Google로 계속하기</button>
-    <div class="status" id="loginStatus">실제 Firebase 계정으로 로그인해요.</div>
-  </div>
+  <div class="center"><h1>우리의 하루</h1><p>둘만의 추억을 차곡차곡 기록해요.</p><button class="btn dark" disabled> Apple로 계속하기 · 준비 중</button><button class="btn" onclick="loginGoogleAction()">G Google로 계속하기</button><div class="status" id="loginStatus">실제 Firebase 계정으로 로그인해요.</div></div>
 </section>
-
 <section id="profile" class="hidden">
-  <div class="logo">♡</div>
-  <div class="center">
-    <h2>앱에서 사용할 이름</h2>
-    <p class="profile-note">Google 계정 이름은 표시하지 않아.<br>여기서 정한 이름만 둘에게 보여.</p>
-    <input id="nicknameInput" class="name-input" maxlength="12" placeholder="예: 지원">
-    <button class="btn dark" onclick="saveNicknameAction()">이 이름으로 시작하기</button>
-    <button class="btn" onclick="logoutAction()">다른 계정으로 로그인</button>
-  </div>
+  <div class="logo">♡</div><div class="center"><h2>앱에서 사용할 이름</h2><p class="profile-note">Google 계정 이름은 표시하지 않아.<br>여기서 정한 이름만 둘에게 보여.</p><input id="nicknameInput" class="name-input" maxlength="12" placeholder="예: 지원"><button class="btn dark" onclick="saveNicknameAction()">이 이름으로 시작하기</button><button class="btn" onclick="logoutAction()">다른 계정으로 로그인</button></div>
 </section>
-
 <section id="space" class="hidden">
-  <div class="logo">♡</div>
-  <div class="center">
-    <h2>우리 공간</h2>
-    <p>한 명이 공간을 만들고, 다른 한 명은 초대 링크로 들어오면 돼.</p>
-    <button class="btn dark" onclick="createSpaceAction()">우리 공간 만들기</button>
-    <button class="btn" onclick="joinSpaceAction()">초대받았어요</button>
-    <button class="btn" onclick="logoutAction()">로그아웃</button>
-    <div class="userline" id="spaceUser"></div>
-  </div>
+  <div class="logo">♡</div><div class="center"><h2>우리 공간</h2><p>한 명이 공간을 만들고, 다른 한 명은 초대 링크로 들어오면 돼.</p><button class="btn dark" onclick="createSpaceAction()">우리 공간 만들기</button><button class="btn" onclick="joinSpaceAction()">초대받았어요</button><button class="btn" onclick="logoutAction()">로그아웃</button><div class="userline" id="spaceUser"></div></div>
 </section>
-
 <section id="app" class="hidden">
-  <div class="top">
-    <div class="brand">우리의 하루 <span class="pink">♡</span></div>
-    <div class="top-actions">
-      <button class="btn" onclick="inviteAction()">초대</button>
-      <button class="btn" onclick="logoutAction()">로그아웃</button>
-    </div>
-  </div>
+  <div class="top"><div class="brand">우리의 하루 <span class="pink">♡</span></div><div class="top-actions"><button class="btn" onclick="inviteAction()">초대</button><button class="btn" onclick="logoutAction()">로그아웃</button></div></div>
   <div id="couplePeople" class="couple-people"></div>
-
   <section id="homeView" class="tabview active">
-    <div class="hero">
-      <h2>오늘도 함께라서 행복해요 ♡</h2>
-      <p>둘만의 소중한 순간을 남겨보세요.</p>
-      <div class="dplus" id="dplus">D+ ?</div>
-      <div class="since" id="sinceText">사귄 날짜를 설정해 주세요</div>
-      <button class="settings-btn" onclick="openRelationshipSettings()">사귄 날짜 설정/변경</button>
-    </div>
+    <div class="hero"><h2>오늘도 함께라서 행복해요 ♡</h2><p>둘만의 소중한 순간을 남겨보세요.</p><div class="dplus" id="dplus">D+ ?</div><div class="since" id="sinceText">사귄 날짜를 설정해 주세요</div><button class="settings-btn" onclick="openRelationshipSettings()">사귄 날짜 설정/변경</button></div>
     <div class="section"><h3>다가오는 기념일</h3><div id="anniversaryList" class="anniv"></div></div>
     <div class="section"><h3>오늘의 추억</h3><div id="todayMemory" class="memory">1년 전 오늘의 추억이 쌓이면 여기에서 다시 보여줄게 ♡</div></div>
     <div class="section"><h3>최근 활동</h3><div id="recentActivity" class="activity-list"></div></div>
     <div class="section"><h3>최근 기록</h3><div id="homeRecords"></div></div>
   </section>
-
   <section id="calendarView" class="tabview">
-    <div class="section">
-      <div class="calendar-head">
-        <button onclick="shiftMonth(-1)">‹</button>
-        <h3 id="monthLabel" style="margin:0"></h3>
-        <button onclick="shiftMonth(1)">›</button>
-      </div>
-      <div class="week"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
-      <div id="calendar" class="calendar"></div>
-    </div>
-    <div class="section">
-      <h3 id="selectedTitle">선택한 날짜</h3>
-      <div class="memory" id="selectedInfo">날짜를 눌러 기록을 확인해봐.</div>
-      <button id="selectedAddBtn" class="date-add hidden" onclick="openEditor(selectedDate)">＋ 이 날짜에 기록 추가</button>
-    </div>
+    <div class="section"><div class="calendar-head"><button onclick="shiftMonth(-1)">‹</button><h3 id="monthLabel" style="margin:0"></h3><button onclick="shiftMonth(1)">›</button></div><div class="week"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div><div id="calendar" class="calendar"></div></div>
+    <div class="section"><h3 id="selectedTitle">선택한 날짜</h3><div class="memory" id="selectedInfo">날짜를 눌러 기록을 확인해봐.</div><button id="selectedAddBtn" class="date-add hidden" onclick="openEditor(selectedDate)">＋ 이 날짜에 기록 추가</button></div>
   </section>
-
-  <section id="recordView" class="tabview">
-    <div class="section"><h3>기록</h3><p class="section-sub">우리가 쓴 이야기를 날짜순으로 보는 곳이야.</p><div id="recordList"></div></div>
-  </section>
-
-  <section id="memoryView" class="tabview">
-    <div class="section"><h3>추억</h3><p class="section-sub">사진으로 남긴 순간만 앨범처럼 모아봐.</p><div id="gallery" class="gallery"></div></div>
-  </section>
-
+  <section id="recordView" class="tabview"><div class="section"><h3>기록</h3><p class="section-sub">우리가 쓴 이야기를 날짜순으로 보는 곳이야. 기록을 누르면 반응/댓글을 남길 수 있어.</p><div id="recordList"></div></div></section>
+  <section id="memoryView" class="tabview"><div class="section"><h3>추억</h3><p class="section-sub">사진으로 남긴 순간만 앨범처럼 모아봐.</p><div class="fav-filter"><button id="memoryAllBtn" class="active" onclick="setMemoryFilter('all')">전체</button><button id="memoryFavBtn" onclick="setMemoryFilter('favorite')">⭐ 즐겨찾기</button></div><div id="gallery" class="gallery"></div></div></section>
+  <section id="bucketView" class="tabview"><div class="section"><div class="section-title-row"><div><h3 style="margin:0">우리 버킷리스트</h3><p class="section-sub" style="margin-top:6px">같이 하고 싶은 걸 하나씩 채워가자 ♡</p></div><button class="btn" onclick="openBucketEditor()">＋ 추가</button></div><div id="bucketList"></div></div></section>
   <button class="fab" onclick="openEditor(currentTab==='calendar'&&selectedDate?selectedDate:null)">+</button>
-  <nav class="nav">
-    <button id="nav-home" class="active" onclick="showTab('home')">홈</button>
-    <button id="nav-calendar" onclick="showTab('calendar')">캘린더</button>
-    <button id="nav-record" onclick="showTab('record')">기록</button>
-    <button id="nav-memory" onclick="showTab('memory')">추억</button>
-  </nav>
+  <nav class="nav"><button id="nav-home" class="active" onclick="showTab('home')">홈</button><button id="nav-calendar" onclick="showTab('calendar')">캘린더</button><button id="nav-record" onclick="showTab('record')">기록</button><button id="nav-memory" onclick="showTab('memory')">추억</button><button id="nav-bucket" onclick="showTab('bucket')">버킷</button></nav>
 </section>
 </main>
-
-<div id="editor" class="modal" onclick="if(event.target===this)closeEditor()">
-  <div class="sheet">
-    <h3>새로운 기록 ♡</h3>
-    <label class="small">날짜</label>
-    <input id="date" type="date">
-    <input id="title" placeholder="제목">
-    <textarea id="text" placeholder="오늘의 기록"></textarea>
-    <input id="location" placeholder="장소">
-    <input id="mood" placeholder="기분 😊">
-    <label class="small">사진 (최대 3장 · 자동 압축)</label>
-    <input id="photo" type="file" accept="image/*" multiple onchange="previewFiles()">
-    <div id="photoPreview" class="photo-preview"></div>
-    <button class="btn dark" id="saveRecordBtn" onclick="saveRecordAction()">저장하기</button>
-  </div>
-</div>
-
-<div id="relationshipModal" class="modal" onclick="if(event.target===this)this.style.display='none'">
-  <div class="sheet">
-    <h3>우리가 사귄 날 ♡</h3>
-    <p class="section-sub">이 날짜를 기준으로 D+와 기념일을 자동 계산해.</p>
-    <input id="relationshipDate" type="date">
-    <button class="btn dark" onclick="saveRelationshipDateAction()">저장하기</button>
-  </div>
-</div>
-
-<div id="memoryModal" class="modal" onclick="if(event.target===this)this.style.display='none'">
-  <div class="sheet" id="memoryDetail"></div>
-</div>
-
+<div id="editor" class="modal" onclick="if(event.target===this)closeEditor()"><div class="sheet"><h3>새로운 기록 ♡</h3><label class="small">날짜</label><input id="date" type="date"><input id="title" placeholder="제목"><textarea id="text" placeholder="오늘의 기록"></textarea><input id="location" placeholder="장소"><input id="mood" placeholder="기분 😊"><label class="small">사진 (최대 3장 · 자동 압축)</label><input id="photo" type="file" accept="image/*" multiple onchange="previewFiles()"><div id="photoPreview" class="photo-preview"></div><button class="btn dark" id="saveRecordBtn" onclick="saveRecordAction()">저장하기</button></div></div>
+<div id="relationshipModal" class="modal" onclick="if(event.target===this)this.style.display='none'"><div class="sheet"><h3>우리가 사귄 날 ♡</h3><p class="section-sub">이 날짜를 기준으로 D+와 기념일을 자동 계산해.</p><input id="relationshipDate" type="date"><button class="btn dark" onclick="saveRelationshipDateAction()">저장하기</button></div></div>
+<div id="memoryModal" class="modal" onclick="if(event.target===this)this.style.display='none'"><div class="sheet" id="memoryDetail"></div></div>
+<div id="recordModal" class="modal" onclick="if(event.target===this)this.style.display='none'"><div class="sheet" id="recordDetail"></div></div>
+<div id="bucketModal" class="modal" onclick="if(event.target===this)this.style.display='none'"><div class="sheet"><h3>버킷리스트 추가 ♡</h3><input id="bucketTitle" maxlength="60" placeholder="예: 제주도 같이 가기"><textarea id="bucketNote" maxlength="200" placeholder="메모 (선택)"></textarea><button class="btn dark" id="saveBucketBtn" onclick="saveBucketAction()">추가하기</button></div></div>
 <script type="module" src="./app.js"></script>
 </body>
 </html>
