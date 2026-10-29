@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js';
 import {
-  getAuth, GoogleAuthProvider, OAuthProvider, signInWithRedirect,
-  getRedirectResult, onAuthStateChanged, signOut
+  getAuth, GoogleAuthProvider, OAuthProvider, signInWithPopup, signInWithRedirect,
+  getRedirectResult, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence
 } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
@@ -13,6 +13,10 @@ const app = firebaseReady ? initializeApp(firebaseConfig) : null;
 const auth = app ? getAuth(app) : null;
 const db = app ? getFirestore(app) : null;
 
+if (auth) {
+  setPersistence(auth, browserLocalPersistence).catch(console.error);
+}
+
 const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const makeInviteCode = () => Array.from({ length: 8 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
 
@@ -20,9 +24,10 @@ export { firebaseReady };
 
 export async function loginGoogle() {
   if (!auth) throw new Error('Firebase 연결이 준비되지 않았습니다.');
+  await setPersistence(auth, browserLocalPersistence);
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
-  await signInWithRedirect(auth, provider);
+  return signInWithPopup(auth, provider);
 }
 
 export async function loginApple() {
