@@ -12,22 +12,32 @@ import { firebaseConfig, firebaseReady } from './firebase-config.js';
 const app = firebaseReady ? initializeApp(firebaseConfig) : null;
 const auth = app ? getAuth(app) : null;
 const db = app ? getFirestore(app) : null;
-
 if (auth) setPersistence(auth, browserLocalPersistence).catch(console.error);
 
 const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const makeInviteCode = () => Array.from({ length: 8 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
 const cleanNickname = value => String(value || '').trim().replace(/\s+/g, ' ').slice(0, 12);
+const cleanText = (value, max=200) => String(value || '').trim().slice(0, max);
+const makeId = () => `${Date.now().toString(36)}_${Math.random().toString(36).slice(2,8)}`;
+
+async function myNickname() {
+  if (!auth?.currentUser) throw new Error('로그인이 필요합니다.');
+  const snap = await getDoc(doc(db, 'users', auth.currentUser.uid));
+  const nickname = cleanNickname(snap.exists() ? snap.data().nickname : '');
+  if (!nickname) throw new Error('앱에서 사용할 이름을 먼저 설정해 주세요.');
+  return nickname;
+}
 
 async function writeMemberProfile(coupleId, uid, nickname) {
   if (!coupleId || !uid || !nickname) return;
   await setDoc(doc(db, 'couples', coupleId, 'records', `profile_${uid}`), {
-    type: 'member-profile',
-    date: '0000-00-00',
-    authorUid: uid,
-    authorName: nickname,
+    type: 'member-profile', date: '0000-00-00', authorUid: uid, authorName: nickname,
     updatedAt: serverTimestamp()
   }, { merge: true });
+}
+
+function activity(type, actorUid, actorName, extra={}) {
+  return { id: makeId(), type, actorUid, actorName, atMs: Date.now(), ...extra };
 }
 
 export { firebaseReady };
@@ -43,8 +53,7 @@ export async function loginGoogle() {
 export async function loginApple() {
   if (!auth) throw new Error('Firebase 연결이 준비되지 않았습니다.');
   const provider = new OAuthProvider('apple.com');
-  provider.addScope('email');
-  provider.addScope('name');
+  provider.addScope('email'); provider.addScope('name');
   await signInWithRedirect(auth, provider);
 }
 
@@ -58,9 +67,7 @@ export function watchAuth(callback) {
   return onAuthStateChanged(auth, user => callback(user));
 }
 
-export async function logout() {
-  if (auth) await signOut(auth);
-}
+export async function logout() { if (auth) await signOut(auth); }
 
 export async function getMyProfile() {
   if (!auth?.currentUser) return null;
@@ -79,13 +86,7 @@ export async function saveNickname(value) {
     await setDoc(userRef, { uid, nickname, updatedAt: serverTimestamp() }, { merge: true });
     if (snap.data().coupleId) await writeMemberProfile(snap.data().coupleId, uid, nickname);
   } else {
-    await setDoc(userRef, {
-      uid,
-      nickname,
-      coupleId: null,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    });
+    await setDoc(userRef, { uid, nickname, coupleId: null, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
   }
   return nickname;
 }
@@ -98,26 +99,12 @@ export async function createCoupleSpace() {
   const nickname = cleanNickname(userSnap.exists() ? userSnap.data().nickname : '');
   if (!nickname) throw new Error('먼저 앱에서 사용할 이름을 설정해 주세요.');
   if (userSnap.exists() && userSnap.data().coupleId) throw new Error('이미 커플 공간에 참여 중입니다.');
-
   const coupleRef = doc(collection(db, 'couples'));
   const code = makeInviteCode();
   const inviteRef = doc(db, 'invites', code);
   const batch = writeBatch(db);
-  batch.set(coupleRef, {
-    ownerUid: uid,
-    members: [uid],
-    relationshipDate: null,
-    inviteCode: code,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp()
-  });
-  batch.set(inviteRef, {
-    code,
-    coupleId: coupleRef.id,
-    ownerUid: uid,
-    active: true,
-    createdAt: serverTimestamp()
-  });
+  batch.set(coupleRef, { ownerUid: uid, members: [uid], relationshipDate: null, inviteCode: code, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+  batch.set(inviteRef, { code, coupleId: coupleRef.id, ownerUid: uid, active: true, createdAt: serverTimestamp() });
   batch.set(userRef, { uid, nickname, coupleId: coupleRef.id, updatedAt: serverTimestamp() }, { merge: true });
   await batch.commit();
   await writeMemberProfile(coupleRef.id, uid, nickname);
@@ -129,30 +116,19 @@ export async function joinCoupleSpace(codeInput) {
   const uid = auth.currentUser.uid;
   const code = String(codeInput || '').trim().toUpperCase();
   if (!code) throw new Error('초대 코드를 입력해 주세요.');
-
   const userRef = doc(db, 'users', uid);
   const userSnap = await getDoc(userRef);
   const nickname = cleanNickname(userSnap.exists() ? userSnap.data().nickname : '');
   if (!nickname) throw new Error('먼저 앱에서 사용할 이름을 설정해 주세요.');
   if (userSnap.exists() && userSnap.data().coupleId) throw new Error('이미 커플 공간에 참여 중입니다.');
-
   const inviteRef = doc(db, 'invites', code);
   const inviteSnap = await getDoc(inviteRef);
   if (!inviteSnap.exists() || !inviteSnap.data().active) throw new Error('유효하지 않거나 이미 사용된 초대 코드입니다.');
-
   const coupleId = inviteSnap.data().coupleId;
   const coupleRef = doc(db, 'couples', coupleId);
   const batch = writeBatch(db);
-  batch.update(coupleRef, {
-    members: arrayUnion(uid),
-    inviteCode: null,
-    updatedAt: serverTimestamp()
-  });
-  batch.update(inviteRef, {
-    active: false,
-    usedBy: uid,
-    usedAt: serverTimestamp()
-  });
+  batch.update(coupleRef, { members: arrayUnion(uid), inviteCode: null, updatedAt: serverTimestamp() });
+  batch.update(inviteRef, { active: false, usedBy: uid, usedAt: serverTimestamp() });
   batch.set(userRef, { uid, nickname, coupleId, updatedAt: serverTimestamp() }, { merge: true });
   await batch.commit();
   await writeMemberProfile(coupleId, uid, nickname);
@@ -161,52 +137,117 @@ export async function joinCoupleSpace(codeInput) {
 
 export function watchCouple(coupleId, callback, onError) {
   if (!coupleId) { callback(null); return () => {}; }
-  return onSnapshot(
-    doc(db, 'couples', coupleId),
-    snap => callback(snap.exists() ? { id: snap.id, ...snap.data() } : null),
-    onError || console.error
-  );
+  return onSnapshot(doc(db, 'couples', coupleId), snap => callback(snap.exists() ? { id: snap.id, ...snap.data() } : null), onError || console.error);
 }
 
 export function watchRecords(coupleId, callback, onError) {
   if (!coupleId) { callback([]); return () => {}; }
   const q = query(collection(db, 'couples', coupleId, 'records'), orderBy('date', 'desc'));
-  return onSnapshot(
-    q,
-    snap => callback(snap.docs.map(d => ({ id: d.id, ...d.data() }))),
-    onError || console.error
-  );
+  return onSnapshot(q, snap => callback(snap.docs.map(d => ({ id: d.id, ...d.data() }))), onError || console.error);
 }
 
 export async function saveRelationshipDate(coupleId, value) {
   if (!coupleId) throw new Error('커플 공간이 없습니다.');
-  await updateDoc(doc(db, 'couples', coupleId), {
-    relationshipDate: value,
-    updatedAt: serverTimestamp()
-  });
+  await updateDoc(doc(db, 'couples', coupleId), { relationshipDate: value, updatedAt: serverTimestamp() });
 }
 
 export async function saveRecord(coupleId, data) {
   if (!auth?.currentUser || !coupleId) throw new Error('로그인과 커플 공간이 필요합니다.');
-  const profileSnap = await getDoc(doc(db, 'users', auth.currentUser.uid));
-  const nickname = cleanNickname(profileSnap.exists() ? profileSnap.data().nickname : '');
-  if (!nickname) throw new Error('앱에서 사용할 이름을 먼저 설정해 주세요.');
-
+  const nickname = await myNickname();
+  const photos = Array.isArray(data.photos) ? data.photos.slice(0,3) : [];
+  const log = activity('record-create', auth.currentUser.uid, nickname, { photos: photos.length, title: cleanText(data.title,60) || '우리의 하루' });
   const refDoc = await addDoc(collection(db, 'couples', coupleId, 'records'), {
-    date: data.date,
-    title: data.title || '우리의 하루',
-    text: data.text || '',
-    location: data.location || '',
-    mood: data.mood || '',
-    photos: Array.isArray(data.photos) ? data.photos.slice(0, 3) : [],
-    authorUid: auth.currentUser.uid,
-    authorName: nickname,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp()
+    type: 'memory', date: data.date, title: cleanText(data.title,60) || '우리의 하루', text: cleanText(data.text,2000),
+    location: cleanText(data.location,100), mood: cleanText(data.mood,30), photos,
+    authorUid: auth.currentUser.uid, authorName: nickname, favorite: false,
+    reactions: { heart: [], laugh: [], teary: [] }, comments: [], activityLog: [log],
+    createdAt: serverTimestamp(), updatedAt: serverTimestamp()
   });
   return refDoc.id;
 }
 
-export function currentUser() {
-  return auth?.currentUser || null;
+export async function toggleFavorite(coupleId, recordId) {
+  if (!auth?.currentUser || !coupleId || !recordId) return;
+  const nickname = await myNickname();
+  const ref = doc(db, 'couples', coupleId, 'records', recordId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+  const next = !snap.data().favorite;
+  await updateDoc(ref, {
+    favorite: next, updatedAt: serverTimestamp(),
+    activityLog: arrayUnion(activity(next ? 'favorite-add' : 'favorite-remove', auth.currentUser.uid, nickname, { title: snap.data().title || '우리의 하루' }))
+  });
+  return next;
 }
+
+export async function toggleReaction(coupleId, recordId, reactionKey) {
+  if (!auth?.currentUser || !coupleId || !recordId) return;
+  if (!['heart','laugh','teary'].includes(reactionKey)) return;
+  const nickname = await myNickname();
+  const ref = doc(db, 'couples', coupleId, 'records', recordId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+  const current = snap.data().reactions || {};
+  const reactions = {
+    heart: Array.isArray(current.heart) ? [...current.heart] : [],
+    laugh: Array.isArray(current.laugh) ? [...current.laugh] : [],
+    teary: Array.isArray(current.teary) ? [...current.teary] : []
+  };
+  const uid = auth.currentUser.uid;
+  const active = reactions[reactionKey].includes(uid);
+  reactions[reactionKey] = active ? reactions[reactionKey].filter(x => x !== uid) : [...reactions[reactionKey], uid];
+  const update = { reactions, updatedAt: serverTimestamp() };
+  if (!active) update.activityLog = arrayUnion(activity('reaction', uid, nickname, { reaction: reactionKey, title: snap.data().title || '우리의 하루' }));
+  await updateDoc(ref, update);
+  return !active;
+}
+
+export async function addComment(coupleId, recordId, text) {
+  if (!auth?.currentUser || !coupleId || !recordId) return;
+  const body = cleanText(text,300);
+  if (!body) throw new Error('댓글을 입력해 주세요.');
+  const nickname = await myNickname();
+  const ref = doc(db, 'couples', coupleId, 'records', recordId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+  const comment = { id: makeId(), uid: auth.currentUser.uid, name: nickname, text: body, atMs: Date.now() };
+  await updateDoc(ref, {
+    comments: arrayUnion(comment), updatedAt: serverTimestamp(),
+    activityLog: arrayUnion(activity('comment', auth.currentUser.uid, nickname, { title: snap.data().title || '우리의 하루', preview: body.slice(0,50) }))
+  });
+  return comment;
+}
+
+export async function createBucketItem(coupleId, data) {
+  if (!auth?.currentUser || !coupleId) throw new Error('로그인과 커플 공간이 필요합니다.');
+  const title = cleanText(data.title,60);
+  if (!title) throw new Error('버킷리스트 내용을 입력해 주세요.');
+  const nickname = await myNickname();
+  const refDoc = await addDoc(collection(db, 'couples', coupleId, 'records'), {
+    type: 'bucket', date: data.date, title, note: cleanText(data.note,200), done: false,
+    authorUid: auth.currentUser.uid, authorName: nickname,
+    activityLog: [activity('bucket-create', auth.currentUser.uid, nickname, { title })],
+    createdAt: serverTimestamp(), updatedAt: serverTimestamp()
+  });
+  return refDoc.id;
+}
+
+export async function toggleBucketItem(coupleId, itemId) {
+  if (!auth?.currentUser || !coupleId || !itemId) return;
+  const nickname = await myNickname();
+  const ref = doc(db, 'couples', coupleId, 'records', itemId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+  const next = !snap.data().done;
+  await updateDoc(ref, {
+    done: next,
+    completedAtMs: next ? Date.now() : null,
+    completedByUid: next ? auth.currentUser.uid : null,
+    completedByName: next ? nickname : null,
+    updatedAt: serverTimestamp(),
+    activityLog: arrayUnion(activity(next ? 'bucket-complete' : 'bucket-reopen', auth.currentUser.uid, nickname, { title: snap.data().title || '버킷리스트' }))
+  });
+  return next;
+}
+
+export function currentUser() { return auth?.currentUser || null; }
