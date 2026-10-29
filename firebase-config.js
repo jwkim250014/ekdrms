@@ -1,11 +1,11 @@
-// 실제 값은 Firebase 프로젝트 생성 후 자동으로 채웁니다.
 export const firebaseConfig = {
-  apiKey: "PASTE_FIREBASE_API_KEY",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "PASTE_MESSAGING_SENDER_ID",
-  appId: "PASTE_FIREBASE_APP_ID"
+  apiKey: "AIzaSyChs6KeR9kEL7-EUH2mVCnGYc0wv1sSobE",
+  authDomain: "jiwon-56b62.firebaseapp.com",
+  projectId: "jiwon-56b62",
+  storageBucket: "jiwon-56b62.firebasestorage.app",
+  messagingSenderId: "1033532921828",
+  appId: "1:1033532921828:web:2f48da3a86874df133d9f1",
+  measurementId: "G-SECMDVCNNZ"
 };
 
-export const firebaseReady = !Object.values(firebaseConfig).some(v => String(v).includes('PASTE_'));
+export const firebaseReady = true;
