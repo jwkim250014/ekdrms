@@ -10,76 +10,133 @@
 <link rel="manifest" href="manifest.json">
 <title>우리의 하루</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;background:linear-gradient(#fff8fa,#fff);color:#4b3b42}.wrap{max-width:480px;margin:auto;min-height:100dvh;padding:24px 18px 110px}.logo{width:88px;height:88px;border-radius:28px;background:linear-gradient(135deg,#ff9db5,#ffd0dc);display:grid;place-items:center;font-size:42px;margin:80px auto 18px}.center{text-align:center}.btn{width:100%;padding:15px;border:1px solid #eadde2;border-radius:16px;background:#fff;margin-top:10px;font-weight:700;color:#4b3b42}.btn:disabled{opacity:.45}.dark{background:#40343a;color:#fff}.hidden{display:none!important}.top{display:flex;justify-content:space-between;align-items:center;gap:8px}.top-actions{display:flex;gap:7px}.top .btn{width:auto;margin:0;padding:10px 12px}.brand{font-size:24px;font-weight:800}.pink{color:#e76b8d}.hero{margin-top:18px;background:linear-gradient(135deg,#fff,#ffeef3);border-radius:24px;padding:20px}.hero h2{margin:0 0 6px}.dplus{font-size:34px;font-weight:800;color:#e76b8d;margin-top:14px}.since{font-size:13px;color:#927f87;margin-top:4px}.section{margin-top:22px}.section h3{margin-bottom:8px}.section-sub{color:#927f87;font-size:13px;margin:0 0 12px}.memory{background:#fff;border:1px solid #f1dfe5;border-radius:20px;padding:14px;margin-top:10px}.memory h4{margin:10px 0 6px}.memory p{line-height:1.55;color:#6f5d65}.calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.calendar-head button{width:36px;height:36px;border:0;border-radius:50%;background:#fff0f4;color:#d86585;font-size:22px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;color:#9b8990;font-size:12px;margin-bottom:6px}.day{aspect-ratio:1;border:0;border-radius:12px;background:#fff;position:relative;color:#4b3b42}.day.mark:after{content:'♥';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-size:8px;color:#ff8fab}.day.selected{background:#ffedf2;color:#d85f80;font-weight:800}.tabview{display:none}.tabview.active{display:block}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:flex;justify-content:space-around;background:#fffdfddd;border-top:1px solid #f0dfe5;padding:12px 0 calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(14px);z-index:8}.nav button{border:0;background:none;color:#9b8990;min-width:58px;padding:4px}.nav button.active{color:#e76b8d;font-weight:800}.fab{position:fixed;bottom:62px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;border:5px solid white;background:#ff7f9e;color:#fff;font-size:30px;z-index:9}.modal{position:fixed;inset:0;background:#0005;display:none;align-items:flex-end;z-index:20}.sheet{background:#fff;border-radius:28px 28px 0 0;padding:20px;width:100%;max-width:480px;margin:auto;max-height:90dvh;overflow:auto}.sheet input,.sheet textarea{width:100%;margin:6px 0 12px;padding:12px;border:1px solid #eadde2;border-radius:12px;background:#fff}.sheet textarea{min-height:110px;resize:vertical}.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.photo-card{position:relative;border-radius:18px;overflow:hidden;background:#f6e7eb;aspect-ratio:1;border:0;padding:0}.photo-card img{width:100%;height:100%;object-fit:cover;display:block}.photo-meta{position:absolute;left:0;right:0;bottom:0;padding:28px 10px 9px;background:linear-gradient(transparent,#0009);color:white;text-align:left}.photo-meta b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.photo-meta span{font-size:11px;opacity:.9}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff0f4;color:#d86585;font-size:12px;margin:0 6px 6px 0}.anniv{display:grid;gap:10px}.anniv-item{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#fff;border:1px solid #f1dfe5;border-radius:16px;padding:13px 14px}.anniv-item b{font-size:14px}.anniv-item span{font-size:12px;color:#927f87}.settings-btn{margin-top:14px;width:auto;padding:9px 12px;border:1px solid #efdce3;border-radius:999px;background:#fff;color:#d96584;font-weight:700}.date-add{width:100%;padding:13px;border:0;border-radius:14px;background:#ffedf2;color:#d85f80;font-weight:800;margin-top:12px}.record-photo{width:72px;height:72px;border-radius:14px;object-fit:cover;float:right;margin-left:10px}.photo-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:-4px 0 12px}.photo-preview img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px}.detail-photo{width:100%;border-radius:18px;max-height:52vh;object-fit:cover}.empty{background:#fff;border:1px dashed #e8cdd5;border-radius:20px;padding:28px 16px;text-align:center;color:#927f87}.small{font-size:12px;color:#927f87}.status{font-size:12px;color:#927f87;margin-top:10px}.userline{font-size:12px;color:#927f87;margin-top:8px}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;background:linear-gradient(#fff8fa,#fff);color:#4b3b42}.wrap{max-width:480px;margin:auto;min-height:100dvh;padding:24px 18px 110px}.logo{width:88px;height:88px;border-radius:28px;background:linear-gradient(135deg,#ff9db5,#ffd0dc);display:grid;place-items:center;font-size:42px;margin:80px auto 18px}.center{text-align:center}.btn{width:100%;padding:15px;border:1px solid #eadde2;border-radius:16px;background:#fff;margin-top:10px;font-weight:700;color:#4b3b42}.btn:disabled{opacity:.45}.dark{background:#40343a;color:#fff}.hidden{display:none!important}.top{display:flex;justify-content:space-between;align-items:center;gap:8px}.top-actions{display:flex;gap:7px}.top .btn{width:auto;margin:0;padding:10px 12px}.brand{font-size:24px;font-weight:800}.pink{color:#e76b8d}.hero{margin-top:18px;background:linear-gradient(135deg,#fff,#ffeef3);border-radius:24px;padding:20px}.hero h2{margin:0 0 6px}.dplus{font-size:34px;font-weight:800;color:#e76b8d;margin-top:14px}.since{font-size:13px;color:#927f87;margin-top:4px}.section{margin-top:22px}.section h3{margin-bottom:8px}.section-sub{color:#927f87;font-size:13px;margin:0 0 12px}.memory{background:#fff;border:1px solid #f1dfe5;border-radius:20px;padding:14px;margin-top:10px}.memory h4{margin:10px 0 6px}.memory p{line-height:1.55;color:#6f5d65}.calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.calendar-head button{width:36px;height:36px;border:0;border-radius:50%;background:#fff0f4;color:#d86585;font-size:22px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;color:#9b8990;font-size:12px;margin-bottom:6px}.day{aspect-ratio:1;border:0;border-radius:12px;background:#fff;position:relative;color:#4b3b42}.day.mark:after{content:'♥';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-size:8px;color:#ff8fab}.day.selected{background:#ffedf2;color:#d85f80;font-weight:800}.tabview{display:none}.tabview.active{display:block}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:flex;justify-content:space-around;background:#fffdfddd;border-top:1px solid #f0dfe5;padding:12px 0 calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(14px);z-index:8}.nav button{border:0;background:none;color:#9b8990;min-width:58px;padding:4px}.nav button.active{color:#e76b8d;font-weight:800}.fab{position:fixed;bottom:62px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;border:5px solid white;background:#ff7f9e;color:#fff;font-size:30px;z-index:9}.modal{position:fixed;inset:0;background:#0005;display:none;align-items:flex-end;z-index:20}.sheet{background:#fff;border-radius:28px 28px 0 0;padding:20px;width:100%;max-width:480px;margin:auto;max-height:90dvh;overflow:auto}.sheet input,.sheet textarea{width:100%;margin:6px 0 12px;padding:12px;border:1px solid #eadde2;border-radius:12px;background:#fff}.sheet textarea{min-height:110px;resize:vertical}.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.photo-card{position:relative;border-radius:18px;overflow:hidden;background:#f6e7eb;aspect-ratio:1;border:0;padding:0}.photo-card img{width:100%;height:100%;object-fit:cover;display:block}.photo-meta{position:absolute;left:0;right:0;bottom:0;padding:28px 10px 9px;background:linear-gradient(transparent,#0009);color:white;text-align:left}.photo-meta b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.photo-meta span{font-size:11px;opacity:.9}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff0f4;color:#d86585;font-size:12px;margin:0 6px 6px 0}.anniv{display:grid;gap:10px}.anniv-item{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#fff;border:1px solid #f1dfe5;border-radius:16px;padding:13px 14px}.anniv-item b{font-size:14px}.anniv-item span{font-size:12px;color:#927f87}.settings-btn{margin-top:14px;width:auto;padding:9px 12px;border:1px solid #efdce3;border-radius:999px;background:#fff;color:#d96584;font-weight:700}.date-add{width:100%;padding:13px;border:0;border-radius:14px;background:#ffedf2;color:#d85f80;font-weight:800;margin-top:12px}.record-photo{width:72px;height:72px;border-radius:14px;object-fit:cover;float:right;margin-left:10px}.photo-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:-4px 0 12px}.photo-preview img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px}.detail-photo{width:100%;border-radius:18px;max-height:52vh;object-fit:cover}.empty{background:#fff;border:1px dashed #e8cdd5;border-radius:20px;padding:28px 16px;text-align:center;color:#927f87}.small{font-size:12px;color:#927f87}.status{font-size:12px;color:#927f87;margin-top:10px}.userline{font-size:12px;color:#927f87;margin-top:8px}.codebox{margin:14px 0;padding:14px;background:#fff0f4;border-radius:14px;font-weight:800;letter-spacing:2px;color:#d86585}.couple-people{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:16px 0 2px;padding:12px;background:#fff;border:1px solid #f1dfe5;border-radius:20px}.person-card{text-align:center;min-width:0}.person-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#ffe7ee;display:grid;place-items:center;margin:0 auto 6px;font-weight:800;color:#d86585;overflow:hidden}.person-avatar img{width:100%;height:100%;object-fit:cover}.person-name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.person-sub{font-size:11px;color:#9b8990;margin-top:3px}.me-badge{display:inline-block;margin-left:4px;padding:2px 6px;border-radius:999px;background:#ffedf2;color:#d85f80;font-size:10px;vertical-align:1px}.couple-heart{color:#e76b8d;font-size:22px}.author-tag{font-size:11px;color:#927f87;margin-top:6px}.profile-note{font-size:13px;color:#927f87;line-height:1.5}.name-input{width:100%;padding:14px;border:1px solid #eadde2;border-radius:14px;font-size:16px;text-align:center;margin-top:14px}.activity-list{display:grid;gap:9px}.activity-item{background:#fff;border:1px solid #f1dfe5;border-radius:15px;padding:12px 14px;font-size:13px;color:#6f5d65}.activity-item b{color:#4b3b42}.person-sub{white-space:nowrap}
 </style>
 </head>
 <body>
 <main class="wrap">
 <section id="login">
   <div class="logo">♡</div>
-  <div class="center"><h1>우리의 하루</h1><p>둘만의 추억을 차곡차곡 기록해요.</p><button class="btn dark" disabled> Apple로 계속하기 · 준비 중</button><button class="btn" onclick="loginGoogleAction()">G Google로 계속하기</button><div class="status" id="loginStatus">실제 Firebase 계정으로 로그인해요.</div></div>
+  <div class="center">
+    <h1>우리의 하루</h1>
+    <p>둘만의 추억을 차곡차곡 기록해요.</p>
+    <button class="btn dark" disabled> Apple로 계속하기 · 준비 중</button>
+    <button class="btn" onclick="loginGoogleAction()">G Google로 계속하기</button>
+    <div class="status" id="loginStatus">실제 Firebase 계정으로 로그인해요.</div>
+  </div>
 </section>
+
+<section id="profile" class="hidden">
+  <div class="logo">♡</div>
+  <div class="center">
+    <h2>앱에서 사용할 이름</h2>
+    <p class="profile-note">Google 계정 이름은 표시하지 않아.<br>여기서 정한 이름만 둘에게 보여.</p>
+    <input id="nicknameInput" class="name-input" maxlength="12" placeholder="예: 지원">
+    <button class="btn dark" onclick="saveNicknameAction()">이 이름으로 시작하기</button>
+    <button class="btn" onclick="logoutAction()">다른 계정으로 로그인</button>
+  </div>
+</section>
+
 <section id="space" class="hidden">
-  <div class="logo">♡</div><div class="center"><h2>우리 공간</h2><p>한 명이 공간을 만들고, 다른 한 명은 초대 링크로 들어오면 돼.</p><button class="btn dark" onclick="createSpaceAction()">우리 공간 만들기</button><button class="btn" onclick="joinSpaceAction()">초대받았어요</button><button class="btn" onclick="logoutAction()">로그아웃</button><div class="userline" id="spaceUser"></div></div>
+  <div class="logo">♡</div>
+  <div class="center">
+    <h2>우리 공간</h2>
+    <p>한 명이 공간을 만들고, 다른 한 명은 초대 링크로 들어오면 돼.</p>
+    <button class="btn dark" onclick="createSpaceAction()">우리 공간 만들기</button>
+    <button class="btn" onclick="joinSpaceAction()">초대받았어요</button>
+    <button class="btn" onclick="logoutAction()">로그아웃</button>
+    <div class="userline" id="spaceUser"></div>
+  </div>
 </section>
+
 <section id="app" class="hidden">
-  <div class="top"><div class="brand">우리의 하루 <span class="pink">♡</span></div><div class="top-actions"><button class="btn" onclick="inviteAction()">초대</button><button class="btn" onclick="logoutAction()">로그아웃</button></div></div>
+  <div class="top">
+    <div class="brand">우리의 하루 <span class="pink">♡</span></div>
+    <div class="top-actions">
+      <button class="btn" onclick="inviteAction()">초대</button>
+      <button class="btn" onclick="logoutAction()">로그아웃</button>
+    </div>
+  </div>
+  <div id="couplePeople" class="couple-people"></div>
+
   <section id="homeView" class="tabview active">
-    <div class="hero"><h2>오늘도 함께라서 행복해요 ♡</h2><p>둘만의 소중한 순간을 남겨보세요.</p><div class="dplus" id="dplus">D+ ?</div><div class="since" id="sinceText">사귄 날짜를 설정해 주세요</div><button class="settings-btn" onclick="openRelationshipSettings()">사귄 날짜 설정/변경</button></div>
+    <div class="hero">
+      <h2>오늘도 함께라서 행복해요 ♡</h2>
+      <p>둘만의 소중한 순간을 남겨보세요.</p>
+      <div class="dplus" id="dplus">D+ ?</div>
+      <div class="since" id="sinceText">사귄 날짜를 설정해 주세요</div>
+      <button class="settings-btn" onclick="openRelationshipSettings()">사귄 날짜 설정/변경</button>
+    </div>
     <div class="section"><h3>다가오는 기념일</h3><div id="anniversaryList" class="anniv"></div></div>
     <div class="section"><h3>오늘의 추억</h3><div id="todayMemory" class="memory">1년 전 오늘의 추억이 쌓이면 여기에서 다시 보여줄게 ♡</div></div>
+    <div class="section"><h3>최근 활동</h3><div id="recentActivity" class="activity-list"></div></div>
     <div class="section"><h3>최근 기록</h3><div id="homeRecords"></div></div>
   </section>
+
   <section id="calendarView" class="tabview">
-    <div class="section"><div class="calendar-head"><button onclick="shiftMonth(-1)">‹</button><h3 id="monthLabel" style="margin:0"></h3><button onclick="shiftMonth(1)">›</button></div><div class="week"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div><div id="calendar" class="calendar"></div></div>
-    <div class="section"><h3 id="selectedTitle">선택한 날짜</h3><div class="memory" id="selectedInfo">날짜를 눌러 기록을 확인해봐.</div><button id="selectedAddBtn" class="date-add hidden" onclick="openEditor(selectedDate)">＋ 이 날짜에 기록 추가</button></div>
+    <div class="section">
+      <div class="calendar-head">
+        <button onclick="shiftMonth(-1)">‹</button>
+        <h3 id="monthLabel" style="margin:0"></h3>
+        <button onclick="shiftMonth(1)">›</button>
+      </div>
+      <div class="week"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
+      <div id="calendar" class="calendar"></div>
+    </div>
+    <div class="section">
+      <h3 id="selectedTitle">선택한 날짜</h3>
+      <div class="memory" id="selectedInfo">날짜를 눌러 기록을 확인해봐.</div>
+      <button id="selectedAddBtn" class="date-add hidden" onclick="openEditor(selectedDate)">＋ 이 날짜에 기록 추가</button>
+    </div>
   </section>
-  <section id="recordView" class="tabview"><div class="section"><h3>기록</h3><p class="section-sub">우리가 쓴 이야기를 날짜순으로 보는 곳이야.</p><div id="recordList"></div></div></section>
-  <section id="memoryView" class="tabview"><div class="section"><h3>추억</h3><p class="section-sub">사진으로 남긴 순간만 앨범처럼 모아봐.</p><div id="gallery" class="gallery"></div></div></section>
+
+  <section id="recordView" class="tabview">
+    <div class="section"><h3>기록</h3><p class="section-sub">우리가 쓴 이야기를 날짜순으로 보는 곳이야.</p><div id="recordList"></div></div>
+  </section>
+
+  <section id="memoryView" class="tabview">
+    <div class="section"><h3>추억</h3><p class="section-sub">사진으로 남긴 순간만 앨범처럼 모아봐.</p><div id="gallery" class="gallery"></div></div>
+  </section>
+
   <button class="fab" onclick="openEditor(currentTab==='calendar'&&selectedDate?selectedDate:null)">+</button>
-  <nav class="nav"><button id="nav-home" class="active" onclick="showTab('home')">홈</button><button id="nav-calendar" onclick="showTab('calendar')">캘린더</button><button id="nav-record" onclick="showTab('record')">기록</button><button id="nav-memory" onclick="showTab('memory')">추억</button></nav>
+  <nav class="nav">
+    <button id="nav-home" class="active" onclick="showTab('home')">홈</button>
+    <button id="nav-calendar" onclick="showTab('calendar')">캘린더</button>
+    <button id="nav-record" onclick="showTab('record')">기록</button>
+    <button id="nav-memory" onclick="showTab('memory')">추억</button>
+  </nav>
 </section>
 </main>
-<div id="editor" class="modal" onclick="if(event.target===this)closeEditor()"><div class="sheet"><h3>새로운 기록 ♡</h3><label class="small">날짜</label><input id="date" type="date"><input id="title" placeholder="제목"><textarea id="text" placeholder="오늘의 기록"></textarea><input id="location" placeholder="장소"><input id="mood" placeholder="기분 😊"><label class="small">사진 (최대 3장 · 자동 압축)</label><input id="photo" type="file" accept="image/*" multiple onchange="previewFiles()"><div id="photoPreview" class="photo-preview"></div><button class="btn dark" id="saveRecordBtn" onclick="saveRecordAction()">저장하기</button></div></div>
-<div id="relationshipModal" class="modal" onclick="if(event.target===this)this.style.display='none'"><div class="sheet"><h3>우리가 사귄 날 ♡</h3><p class="section-sub">이 날짜를 기준으로 D+와 기념일을 자동 계산해.</p><input id="relationshipDate" type="date"><button class="btn dark" onclick="saveRelationshipDateAction()">저장하기</button></div></div>
-<div id="memoryModal" class="modal" onclick="if(event.target===this)this.style.display='none'"><div class="sheet" id="memoryDetail"></div></div>
-<script type="module">
-import { firebaseReady, loginGoogle, finishRedirectLogin, watchAuth, logout, getMyProfile, createCoupleSpace, joinCoupleSpace, watchCouple, watchRecords, saveRelationshipDate, saveRecord } from './firebase-client.js';
-let records=[],couple=null,coupleId=null,user=null,selectedDate='',calendarMonth=new Date(),currentTab='home',pendingPhotos=[],stopCouple=null,stopRecords=null,autoJoinTried=false;
-const qs=s=>document.querySelector(s);const todayISO=()=>dateISO(new Date());const inviteFromUrl=()=>new URLSearchParams(location.search).get('invite')?.trim().toUpperCase()||'';
-function errText(e){const c=e?.code||'';if(c.includes('unauthorized-domain'))return '이 도메인이 Firebase 로그인 허용 목록에 아직 없어요.';if(c.includes('cancelled'))return '로그인이 취소됐어요.';if(c.includes('permission-denied'))return 'Firestore 보안 규칙을 확인해야 해요.';return e?.message||'처리 중 오류가 발생했어요.'}
-function showOnly(id){['login','space','app'].forEach(x=>qs('#'+x).classList.toggle('hidden',x!==id))}
-async function bootstrapUser(authUser){user=authUser;if(!user){stopLive();couple=null;coupleId=null;records=[];showOnly('login');return}const profile=await getMyProfile();if(profile?.coupleId){connectCouple(profile.coupleId);return}const invite=inviteFromUrl();if(invite&&!autoJoinTried){autoJoinTried=true;try{const id=await joinCoupleSpace(invite);history.replaceState({},'',location.pathname);connectCouple(id);return}catch(e){alert(errText(e))}}qs('#spaceUser').textContent=user.email?`로그인: ${user.email}`:'';showOnly('space')}
-function stopLive(){if(stopCouple)stopCouple();if(stopRecords)stopRecords();stopCouple=null;stopRecords=null}
-function connectCouple(id){stopLive();coupleId=id;showOnly('app');stopCouple=watchCouple(id,data=>{couple=data;if(!couple){alert('커플 공간을 찾을 수 없어요.');showOnly('space');return}renderRelationship()},e=>alert(errText(e)));stopRecords=watchRecords(id,data=>{records=data;render()},e=>alert(errText(e)));render()}
-async function loginGoogleAction(){try{qs('#loginStatus').textContent='Google 로그인 화면으로 이동 중...';await loginGoogle()}catch(e){qs('#loginStatus').textContent=errText(e);alert(errText(e))}}
-async function logoutAction(){try{await logout();location.href=location.pathname}catch(e){alert(errText(e))}}
-async function createSpaceAction(){try{const r=await createCoupleSpace();connectCouple(r.coupleId);setTimeout(()=>inviteAction(),400)}catch(e){alert(errText(e))}}
-async function joinSpaceAction(){const code=prompt('초대 코드를 입력해 주세요',inviteFromUrl());if(!code)return;try{const id=await joinCoupleSpace(code);history.replaceState({},'',location.pathname);connectCouple(id)}catch(e){alert(errText(e))}}
-async function inviteAction(){if(!couple)return;if((couple.members||[]).length>=2){alert('이미 두 사람이 연결된 공간이야 ♡');return}const code=couple.inviteCode;if(!code){alert('초대 코드를 찾을 수 없어.');return}const url=location.origin+location.pathname+'?invite='+encodeURIComponent(code);try{await navigator.clipboard.writeText(url)}catch{}alert(`초대 링크를 복사했어 ♡\n\n초대코드: ${code}\n${url}`)}
-function showTab(name){currentTab=name;document.querySelectorAll('.tabview').forEach(v=>v.classList.remove('active'));document.querySelectorAll('.nav button').forEach(v=>v.classList.remove('active'));qs('#'+name+'View').classList.add('active');qs('#nav-'+name).classList.add('active');if(name==='calendar')renderCalendar();if(name==='record')renderRecordList();if(name==='memory')renderGallery();window.scrollTo({top:0,behavior:'smooth'})}
-function render(){renderRelationship();renderHome();renderCalendar();renderRecordList();renderGallery()}
-function renderHome(){const s=records.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));qs('#homeRecords').innerHTML=s.length?s.slice(0,3).map(recordHTML).join(''):'<div class="empty">첫 기록을 남겨보세요 ♡</div>';const n=new Date(),ly=new Date(n.getFullYear()-1,n.getMonth(),n.getDate()),ds=dateISO(ly),old=records.filter(r=>r.date===ds);qs('#todayMemory').innerHTML=old.length?old.map(r=>`<b>${esc(r.title||'우리의 하루')}</b><p>${esc(r.text||'')}</p>`).join('<hr>'):'1년 전 오늘의 추억이 쌓이면 여기에서 다시 보여줄게 ♡'}
-function recordHTML(r){const p=(r.photos&&r.photos[0])?`<img class="record-photo" src="${r.photos[0]}" alt="">`:'';return `<div class="memory">${p}<div><span class="pill">${r.date||''}</span><span class="pill">${esc(r.mood||'♡')}</span></div><h4>${esc(r.title||'우리의 하루')}</h4><p>${esc(r.text||'')}</p>${r.location?'<small>📍 '+esc(r.location)+'</small>':''}<div style="clear:both"></div></div>`}
-function renderRecordList(){const s=records.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));qs('#recordList').innerHTML=s.length?s.map(recordHTML).join(''):'<div class="empty">아직 기록이 없어요.<br>+ 버튼으로 첫 이야기를 남겨봐.</div>'}
-function renderGallery(){const items=[];records.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))).forEach(r=>(r.photos||[]).forEach((p,pi)=>items.push({r,p,pi})));qs('#gallery').innerHTML=items.length?items.map(x=>`<button class="photo-card" onclick="openMemory('${escAttr(x.r.id)}',${x.pi})"><img src="${x.p}" alt="${escAttr(x.r.title||'추억')}"><div class="photo-meta"><b>${esc(x.r.title||'우리의 하루')}</b><span>${x.r.date||''}</span></div></button>`).join(''):'<div class="empty" style="grid-column:1/-1">사진을 넣어 기록하면<br>여기에 앨범처럼 모여 ♡</div>'}
-function openMemory(id,pi){const r=records.find(x=>String(x.id)===String(id));if(!r)return;const photo=(r.photos||[])[pi]||(r.photos||[])[0];qs('#memoryDetail').innerHTML=`${photo?`<img class="detail-photo" src="${photo}" alt="">`:''}<h3>${esc(r.title||'우리의 하루')}</h3><div><span class="pill">${r.date||''}</span><span class="pill">${esc(r.mood||'♡')}</span></div><p style="line-height:1.7">${esc(r.text||'')}</p>${r.location?'<p class="small">📍 '+esc(r.location)+'</p>':''}`;qs('#memoryModal').style.display='flex'}
-function shiftMonth(n){calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+n,1);renderCalendar()}
-function renderCalendar(){const box=qs('#calendar');box.innerHTML='';const y=calendarMonth.getFullYear(),m=calendarMonth.getMonth(),first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();qs('#monthLabel').textContent=`${y}년 ${m+1}월`;for(let i=0;i<first;i++)box.append(document.createElement('div'));for(let d=1;d<=last;d++){const ds=dateISO(new Date(y,m,d)),b=document.createElement('button');b.className='day'+(records.some(r=>r.date===ds)?' mark':'')+(selectedDate===ds?' selected':'');b.textContent=d;b.onclick=()=>selectCalendarDate(ds);box.append(b)}renderSelectedDate()}
-function selectCalendarDate(ds){selectedDate=ds;qs('#date').value=ds;renderCalendar()}
-function renderSelectedDate(){if(!selectedDate){qs('#selectedTitle').textContent='선택한 날짜';qs('#selectedInfo').innerHTML='날짜를 눌러 기록을 확인해봐.';qs('#selectedAddBtn').classList.add('hidden');return}qs('#selectedTitle').textContent=selectedDate.replaceAll('-','.');const f=records.filter(r=>r.date===selectedDate);qs('#selectedInfo').innerHTML=f.length?f.map(r=>`<b>${esc(r.title||'우리의 하루')}</b><p>${esc(r.text||'')}</p>${r.location?'<small>📍 '+esc(r.location)+'</small>':''}`).join('<hr>'):'이 날은 아직 기록이 없어.';qs('#selectedAddBtn').classList.remove('hidden')}
-function openEditor(v){pendingPhotos=[];qs('#photo').value='';qs('#photoPreview').innerHTML='';qs('#title').value='';qs('#text').value='';qs('#location').value='';qs('#mood').value='';qs('#date').value=v||todayISO();qs('#editor').style.display='flex'}
-function closeEditor(){qs('#editor').style.display='none';pendingPhotos=[]}
-async function previewFiles(){const files=[...qs('#photo').files].slice(0,3);pendingPhotos=[];let total=0;for(const f of files){try{const data=await compressImage(f);if(total+data.length>650000){alert('사진 용량이 커서 일부 사진만 넣었어.');break}pendingPhotos.push(data);total+=data.length}catch{alert('사진을 압축하지 못했어. 다른 사진으로 다시 시도해줘.')}}qs('#photoPreview').innerHTML=pendingPhotos.map(p=>`<img src="${p}" alt="미리보기">`).join('')}
-function compressImage(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const img=new Image();img.onerror=reject;img.onload=()=>{const make=(max,q)=>{const scale=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',q)};let data=make(700,.58);if(data.length>220000)data=make(560,.50);if(data.length>220000)data=make(430,.44);if(data.length>240000)reject(new Error('image-too-large'));else resolve(data)};img.src=reader.result};reader.readAsDataURL(file)})}
-async function saveRecordAction(){if(!coupleId)return;const date=qs('#date').value;if(!date){alert('날짜를 선택해 주세요');return}const btn=qs('#saveRecordBtn');btn.disabled=true;btn.textContent='저장 중...';try{if(qs('#photo').files.length&&pendingPhotos.length===0)await previewFiles();await saveRecord(coupleId,{date,title:qs('#title').value||'우리의 하루',text:qs('#text').value,location:qs('#location').value,mood:qs('#mood').value,photos:pendingPhotos});closeEditor();selectedDate=date;showTab('record')}catch(e){alert(errText(e))}finally{btn.disabled=false;btn.textContent='저장하기'}}
-function openRelationshipSettings(){qs('#relationshipDate').value=couple?.relationshipDate||'';qs('#relationshipModal').style.display='flex'}
-async function saveRelationshipDateAction(){const v=qs('#relationshipDate').value;if(!v){alert('사귄 날짜를 선택해 주세요');return}try{await saveRelationshipDate(coupleId,v);qs('#relationshipModal').style.display='none'}catch(e){alert(errText(e))}}
-function localDate(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}function dateISO(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}function fmt(d){return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`}function daysBetween(a,b){return Math.floor((new Date(b.getFullYear(),b.getMonth(),b.getDate())-new Date(a.getFullYear(),a.getMonth(),a.getDate()))/86400000)}
-function renderRelationship(){const saved=couple?.relationshipDate;if(!saved){qs('#dplus').textContent='D+ ?';qs('#sinceText').textContent='사귄 날짜를 설정해 주세요';qs('#anniversaryList').innerHTML='<div class="memory">사귄 날짜를 설정하면 100일, 200일, 1주년을 자동으로 계산해줘.</div>';return}const start=localDate(saved),today=new Date(),diff=daysBetween(start,today)+1;qs('#dplus').textContent=diff>=1?'D+ '+diff:'D- '+Math.abs(diff-1);qs('#sinceText').textContent=fmt(start)+'부터';const ms=[];[100,200,300,500,1000].forEach(n=>{const d=new Date(start);d.setDate(d.getDate()+n-1);ms.push({label:n+'일',date:d})});for(let y=1;y<=5;y++){const d=new Date(start);d.setFullYear(d.getFullYear()+y);ms.push({label:y+'주년',date:d})}ms.sort((a,b)=>a.date-b.date);const up=ms.filter(x=>daysBetween(today,x.date)>=0).slice(0,4);qs('#anniversaryList').innerHTML=up.length?up.map(x=>{const left=daysBetween(today,x.date);return `<div class="anniv-item"><div><b>${x.label}</b><br><span>${fmt(x.date)}</span></div><span>${left===0?'오늘 ♡':'D-'+left}</span></div>`}).join(''):'<div class="memory">가까운 기념일 정보가 없어요.</div>'}
-function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}function escAttr(s=''){return esc(s).replace(/`/g,'&#96;')}
-Object.assign(window,{loginGoogleAction,logoutAction,createSpaceAction,joinSpaceAction,inviteAction,showTab,shiftMonth,selectCalendarDate,openEditor,closeEditor,previewFiles,saveRecordAction,openMemory,openRelationshipSettings,saveRelationshipDateAction});Object.defineProperty(window,'selectedDate',{get:()=>selectedDate});Object.defineProperty(window,'currentTab',{get:()=>currentTab});
-if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');if(!firebaseReady){qs('#loginStatus').textContent='Firebase 설정을 확인해야 해요.'}else{finishRedirectLogin().catch(e=>{qs('#loginStatus').textContent=errText(e);console.error(e)});watchAuth(u=>bootstrapUser(u).catch(e=>alert(errText(e))))}
-</script>
+
+<div id="editor" class="modal" onclick="if(event.target===this)closeEditor()">
+  <div class="sheet">
+    <h3>새로운 기록 ♡</h3>
+    <label class="small">날짜</label>
+    <input id="date" type="date">
+    <input id="title" placeholder="제목">
+    <textarea id="text" placeholder="오늘의 기록"></textarea>
+    <input id="location" placeholder="장소">
+    <input id="mood" placeholder="기분 😊">
+    <label class="small">사진 (최대 3장 · 자동 압축)</label>
+    <input id="photo" type="file" accept="image/*" multiple onchange="previewFiles()">
+    <div id="photoPreview" class="photo-preview"></div>
+    <button class="btn dark" id="saveRecordBtn" onclick="saveRecordAction()">저장하기</button>
+  </div>
+</div>
+
+<div id="relationshipModal" class="modal" onclick="if(event.target===this)this.style.display='none'">
+  <div class="sheet">
+    <h3>우리가 사귄 날 ♡</h3>
+    <p class="section-sub">이 날짜를 기준으로 D+와 기념일을 자동 계산해.</p>
+    <input id="relationshipDate" type="date">
+    <button class="btn dark" onclick="saveRelationshipDateAction()">저장하기</button>
+  </div>
+</div>
+
+<div id="memoryModal" class="modal" onclick="if(event.target===this)this.style.display='none'">
+  <div class="sheet" id="memoryDetail"></div>
+</div>
+
+<script type="module" src="./app.js"></script>
 </body>
 </html>
