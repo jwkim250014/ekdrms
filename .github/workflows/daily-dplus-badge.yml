@@ -1,0 +1,28 @@
+name: Daily D+ Badge
+
+on:
+  schedule:
+    - cron: '5 15 * * *'
+  workflow_dispatch:
+
+jobs:
+  push-dplus:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install sender dependencies
+        run: npm install --no-save firebase-admin web-push
+
+      - name: Send daily D+ push
+        env:
+          FIREBASE_ADMIN_JSON: ${{ secrets.FIREBASE_ADMIN_JSON }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          VAPID_PUBLIC_KEY: BFALazfhHsea6OECm9Zyc0ONVhlG4apcOtCe91rp6_SD7x3N0wZDkqraWx5UwP9d1VvDkhvQQSaWfaTbLi2uNB8
+        run: node scripts/send-daily-badge.mjs
