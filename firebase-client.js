@@ -20,6 +20,65 @@ if (auth) {
 const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const makeInviteCode = () => Array.from({ length: 8 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
 
+function esc(value = '') {
+  return String(value).replace(/[&<>"']/g, ch => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[ch]));
+}
+
+function shortName(user) {
+  const raw = user?.displayName || user?.email?.split('@')[0] || '나';
+  return String(raw).trim().slice(0, 14) || '나';
+}
+
+function ensureIdentityStyle() {
+  if (document.getElementById('ourdayIdentityStyle')) return;
+  const style = document.createElement('style');
+  style.id = 'ourdayIdentityStyle';
+  style.textContent = `
+    .couple-identity{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:16px 0 2px;padding:12px;background:#fff;border:1px solid #f1dfe5;border-radius:20px}
+    .couple-identity .person{text-align:center;min-width:0}.couple-identity .heart{font-size:22px;color:#e76b8d}
+    .couple-identity .avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;background:#ffe7ee;display:grid;place-items:center;margin:0 auto 6px;color:#d86585;font-weight:800}
+    .couple-identity .avatar img{width:100%;height:100%;object-fit:cover}.couple-identity .name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .couple-identity .sub{font-size:11px;color:#9b8990;margin-top:3px}.couple-identity .me{display:inline-block;margin-left:4px;padding:2px 6px;border-radius:999px;background:#ffedf2;color:#d85f80;font-size:10px;vertical-align:1px}`;
+  document.head.appendChild(style);
+}
+
+function renderIdentityBar(couple) {
+  if (!auth?.currentUser) return;
+  const appSection = document.getElementById('app');
+  const top = appSection?.querySelector('.top');
+  if (!appSection || !top) return;
+  ensureIdentityStyle();
+
+  let box = document.getElementById('coupleIdentity');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'coupleIdentity';
+    box.className = 'couple-identity';
+    top.insertAdjacentElement('afterend', box);
+  }
+
+  const me = auth.currentUser;
+  const myName = shortName(me);
+  const avatar = me.photoURL
+    ? `<div class="avatar"><img src="${esc(me.photoURL)}" alt=""></div>`
+    : `<div class="avatar">${esc(myName.slice(0,1))}</div>`;
+  const partnerConnected = Array.isArray(couple?.members) && couple.members.some(uid => uid !== me.uid);
+
+  box.innerHTML = `
+    <div class="person">${avatar}<div class="name">${esc(myName)} <span class="me">나</span></div><div class="sub">내 계정</div></div>
+    <div class="heart">♡</div>
+    <div class="person"><div class="avatar">♡</div><div class="name">상대방</div><div class="sub">${partnerConnected ? '연결됨' : '초대 대기 중'}</div></div>`;
+}
+
+function decorateRecord(data) {
+  const mine = !!auth?.currentUser && data.authorUid === auth.currentUser.uid;
+  const who = mine ? '나' : '상대방';
+  const mood = String(data.mood || '♡').replace(/\s·\s(?:나|상대방)$/,'');
+  return { ...data, mood: `${mood} · ${who}`, _authorLabel: who };
+}
+
 export { firebaseReady };
 
 export async function loginGoogle() {
@@ -50,6 +109,7 @@ export function watchAuth(callback) {
 
 export async function logout() {
   if (auth) await signOut(auth);
+  document.getElementById('coupleIdentity')?.remove();
 }
 
 export async function getMyProfile() {
@@ -139,7 +199,11 @@ export function watchCouple(coupleId, callback, onError) {
   if (!coupleId) { callback(null); return () => {}; }
   return onSnapshot(
     doc(db, 'couples', coupleId),
-    snap => callback(snap.exists() ? { id: snap.id, ...snap.data() } : null),
+    snap => {
+      const data = snap.exists() ? { id: snap.id, ...snap.data() } : null;
+      renderIdentityBar(data);
+      callback(data);
+    },
     onError || console.error
   );
 }
@@ -149,7 +213,7 @@ export function watchRecords(coupleId, callback, onError) {
   const q = query(collection(db, 'couples', coupleId, 'records'), orderBy('date', 'desc'));
   return onSnapshot(
     q,
-    snap => callback(snap.docs.map(d => ({ id: d.id, ...d.data() }))),
+    snap => callback(snap.docs.map(d => decorateRecord({ id: d.id, ...d.data() }))),
     onError || console.error
   );
 }
@@ -169,7 +233,7 @@ export async function saveRecord(coupleId, data) {
     title: data.title || '우리의 하루',
     text: data.text || '',
     location: data.location || '',
-    mood: data.mood || '',
+    mood: String(data.mood || '').replace(/\s·\s(?:나|상대방)$/,''),
     photos: Array.isArray(data.photos) ? data.photos.slice(0, 3) : [],
     authorUid: auth.currentUser.uid,
     createdAt: serverTimestamp(),
