@@ -1,4 +1,4 @@
-const CACHE='ourday-v9';
+const CACHE='ourday-v10';
 const ASSETS=['./','./index.html','./manifest.json','./icon.svg','./firebase-config.js','./firebase-client.js','./app.js'];
 
 self.addEventListener('install',e=>{
