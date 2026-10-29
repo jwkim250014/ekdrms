@@ -1,5 +1,5 @@
-const CACHE='ourday-v8';
-const ASSETS=['./','./index.html','./manifest.json','./icon.svg','./firebase-config.js','./firebase-client.js'];
+const CACHE='ourday-v9';
+const ASSETS=['./','./index.html','./manifest.json','./icon.svg','./firebase-config.js','./firebase-client.js','./app.js'];
 
 self.addEventListener('install',e=>{
   self.skipWaiting();
