@@ -3,7 +3,7 @@ import { getApp } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-app.j
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
 import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
 
-const VAPID_PUBLIC_KEY = 'BFALazfhHsea6OECm9Zyc0ONVhlG4apcOtCe91rp6_SD7x3N0wZDkqraWx5UwP9d1VvDkhvQQSaWfaTbLi2uNB8';
+const VAPID_PUBLIC_KEY = 'BAWmKLyUUAdo7pe0tYgzoqrAWSZGzest0ws8jpcYV5hO2zjRAgj4JsKRa9TdOcTCscMS_vX_eGJim01_p9XmQig';
 
 const app = getApp();
 const auth = getAuth(app);
@@ -14,6 +14,12 @@ function base64UrlToUint8Array(value) {
   const base64 = (value + padding).replace(/-/g, '+').replace(/_/g, '/');
   const raw = atob(base64);
   return Uint8Array.from([...raw].map(ch => ch.charCodeAt(0)));
+}
+
+function sameBytes(a, b) {
+  if (!a || !b || a.byteLength !== b.byteLength) return false;
+  const aa = new Uint8Array(a), bb = new Uint8Array(b);
+  return aa.every((v, i) => v === bb[i]);
 }
 
 function isStandalone() {
@@ -40,12 +46,7 @@ async function profileAndCouple() {
   const coupleId = userSnap.data().coupleId;
   const coupleSnap = await getDoc(doc(db, 'couples', coupleId));
   if (!coupleSnap.exists()) return null;
-  return {
-    userRef,
-    userData: userSnap.data(),
-    coupleId,
-    couple: coupleSnap.data()
-  };
+  return { userRef, userData: userSnap.data(), coupleId, couple: coupleSnap.data() };
 }
 
 async function setForegroundBadge() {
@@ -121,11 +122,13 @@ async function enableDailyBadge() {
     }
     const reg = await navigator.serviceWorker.ready;
     let sub = await reg.pushManager.getSubscription();
+    const newKey = base64UrlToUint8Array(VAPID_PUBLIC_KEY);
+    if (sub?.options?.applicationServerKey && !sameBytes(sub.options.applicationServerKey, newKey.buffer)) {
+      await sub.unsubscribe();
+      sub = null;
+    }
     if (!sub) {
-      sub = await reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: base64UrlToUint8Array(VAPID_PUBLIC_KEY)
-      });
+      sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: newKey });
     }
     await setDoc(data.userRef, {
       pushEnabled: true,
@@ -145,9 +148,7 @@ async function enableDailyBadge() {
 
 onAuthStateChanged(auth, user => {
   if (!user) return;
-  const observer = new MutationObserver(() => {
-    ensureButton();
-  });
+  const observer = new MutationObserver(() => ensureButton());
   observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
   ensureButton();
   setTimeout(() => { ensureButton(); setForegroundBadge(); }, 800);
